@@ -65,36 +65,24 @@ class BoxApiClientTest extends TestCase
         $this->assertEquals('rename', $strategyProp->getValue($client));
     }
 
-    public function test_generate_unique_filename_creates_numbered_suffix()
+    public function test_api_client_collision_strategy_methods_exist()
     {
         $config = $this->getTestConfig();
         $client = new BoxApiClient($config);
         
         $reflection = new \ReflectionClass($client);
-        $method = $reflection->getMethod('generateUniqueFilename');
-        $method->setAccessible(true);
         
-        // Mock the findFileByName method to simulate existing files
-        $findMethod = $reflection->getMethod('findFileByName');
-        $findMethod->setAccessible(true);
+        // Verify collision handling methods exist
+        $this->assertTrue($reflection->hasMethod('generateUniqueFilename'));
+        $this->assertTrue($reflection->hasMethod('generateUniqueFoldername'));
+        $this->assertTrue($reflection->hasMethod('findFileByName'));
+        $this->assertTrue($reflection->hasMethod('findFolderByName'));
         
-        // Test with extension
-        $this->assertMatchesRegularExpression('/test.*\.txt/', 'test.txt');
+        // Verify these are protected methods (internal use)
+        $uniqueFilenameMethod = $reflection->getMethod('generateUniqueFilename');
+        $this->assertTrue($uniqueFilenameMethod->isProtected());
         
-        // Test without extension
-        $this->assertIsString('testfile');
-    }
-
-    public function test_generate_unique_foldername_creates_numbered_suffix()
-    {
-        $config = $this->getTestConfig();
-        $client = new BoxApiClient($config);
-        
-        $reflection = new \ReflectionClass($client);
-        $method = $reflection->getMethod('generateUniqueFoldername');
-        $method->setAccessible(true);
-        
-        // Just verify the method exists and is callable
-        $this->assertTrue($method->isProtected());
+        $uniqueFoldernameMethod = $reflection->getMethod('generateUniqueFoldername');
+        $this->assertTrue($uniqueFoldernameMethod->isProtected());
     }
 }

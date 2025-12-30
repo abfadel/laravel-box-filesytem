@@ -4,11 +4,15 @@
  * Example usage of the Laravel Box.com Filesystem Adapter
  * 
  * This file demonstrates all the features supported by the package.
+ * Note: These are example snippets, not a complete runnable file.
  */
 
-require 'vendor/autoload.php';
+// For standalone usage:
+// require 'vendor/autoload.php';
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 // ============================================================================
 // BASIC FILE OPERATIONS

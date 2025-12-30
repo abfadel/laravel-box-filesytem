@@ -78,13 +78,11 @@ class BoxJwtAuth
      */
     protected function generateJwtAssertion(): string
     {
-        $authenticationUrl = 'https://api.box.com/oauth2/token';
-        
         $payload = [
             'iss' => $this->clientId,
             'sub' => $this->enterpriseId,
             'box_sub_type' => 'enterprise',
-            'aud' => $authenticationUrl,
+            'aud' => $this->authUrl,
             'jti' => bin2hex(random_bytes(16)),
             'exp' => time() + $this->tokenTtl,
         ];

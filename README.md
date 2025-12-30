@@ -280,7 +280,7 @@ public function share($path)
     $client = $adapter->getClient();
     
     // Get file ID from path
-    $fileId = $adapter->getFileId($path);
+    $fileId = $adapter->getFileIdFromPath($path);
     
     // Create share link
     $result = $client->createFileShareLink($fileId, [

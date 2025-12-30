@@ -399,16 +399,20 @@ class BoxAdapter implements FilesystemAdapter
     }
 
     /**
-     * Clear path from cache
+     * Clear path from cache and all parent paths
      */
     protected function clearPathCache(string $path): void
     {
         unset($this->pathCache[$path]);
         
-        // Also clear parent path cache
+        // Clear all ancestor paths from cache
         $pathInfo = $this->parsePath($path);
-        if ($pathInfo['dir']) {
-            unset($this->pathCache[$pathInfo['dir']]);
+        $currentPath = $pathInfo['dir'];
+        
+        while ($currentPath !== '' && $currentPath !== '/') {
+            unset($this->pathCache[$currentPath]);
+            $pathInfo = $this->parsePath($currentPath);
+            $currentPath = $pathInfo['dir'];
         }
     }
 
@@ -418,5 +422,21 @@ class BoxAdapter implements FilesystemAdapter
     public function getClient(): BoxApiClient
     {
         return $this->client;
+    }
+
+    /**
+     * Get file ID from path (public helper method)
+     */
+    public function getFileIdFromPath(string $path): string
+    {
+        return $this->getFileId($path);
+    }
+
+    /**
+     * Get folder ID from path (public helper method)
+     */
+    public function getFolderIdFromPath(string $path): string
+    {
+        return $this->getFolderId($path);
     }
 }
