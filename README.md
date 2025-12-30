@@ -37,7 +37,7 @@ A Laravel filesystem adapter for Box.com with JWT authentication support. This p
 Install the package via Composer:
 
 ```bash
-composer require abfadel/laravel-box-api-adapter
+composer require abfadel/laravel-box-filesystem
 ```
 
 ### Laravel Auto-Discovery
