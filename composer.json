@@ -1,5 +1,5 @@
 {
-    "name": "abfadel/laravel-box-api-adapter",
+    "name": "abfadel/laravel-box-filesystem",
     "description": "Laravel filesystem adapter for Box.com API with JWT authentication",
     "type": "library",
     "license": "MIT",
